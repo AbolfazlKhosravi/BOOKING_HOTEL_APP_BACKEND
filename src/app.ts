@@ -2,6 +2,7 @@ import cors from "cors";
 import express from "express";
 import "dotenv/config";
 import hotelsRoute from "./routes/hotels-route";
+import homeRoute from "./routes/home-route";
 const app = express();
 
 app.use(express.json());
@@ -12,6 +13,7 @@ app.use(
     origin: "http://localhost:5173",
   })
 );
+app.use("/api", homeRoute);
 app.use("/api/hotels", hotelsRoute);
 
 const APP_PORT =
