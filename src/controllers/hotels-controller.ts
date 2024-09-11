@@ -1,12 +1,32 @@
 import tryCatchHandler from "../utilities/tryCatch_handler";
-import { Request, Response } from "express-serve-static-core";
+import { ParamsDictionary, Request, Response } from "express-serve-static-core";
 import HotelsModules, { HotelType } from "../modules/hotels-module";
 
-export const getHotels = tryCatchHandler<Request, Response<HotelType[]>>(
-  async (req: Request, res: Response<HotelType[]>) => {
-    console.log(req.query.options);
+export interface QueryType {
+  destination?: string;
+  options?: {
+    count?: string;
+    title?: "Adult" | "Children" | "Room";
+    minLimit?: string;
+  }[];
+  date?: {
+    startDate?: string ;
+    endDate?: string ;
+    key?: string;
+  };
+}
 
-    const hotels: HotelType[] = await HotelsModules.getHotels();
+export const getHotels = tryCatchHandler<
+  Request<ParamsDictionary, {}, {}, QueryType>,
+  Response<HotelType[]>
+>(
+  async (
+    req: Request<ParamsDictionary, {}, {}, QueryType>,
+    res: Response<HotelType[]>
+  ) => {
+    const query: QueryType = req.query;
+
+    const hotels: HotelType[] = await HotelsModules.getHotels(query);
     res.status(200).json(hotels);
   }
 );
