@@ -19,21 +19,24 @@ class HotelsModules {
   static getHotels = async (queryStr: QueryType): Promise<HotelType[]> => {
     let query: string = "SELECT h.* FROM hotels as h";
     const value: (string | number)[] = [];
-    
+
     const orConditionsOn: string[] = [];
 
-    query += buildJoinOptions(queryStr,orConditionsOn,value)
-    query += buildJoinReservations(queryStr)
-    query += buildWhereClause(queryStr,value)
-    query += buildGroupByHaving(queryStr,value)
-    
+    query += buildJoinOptions(queryStr, orConditionsOn, value);
+    query += buildJoinReservations(queryStr);
+    query += buildWhereClause(queryStr, value);
+    query += buildGroupByHaving(queryStr, value);
 
     const [result] = await pool.query(query, value);
     return result as HotelType[];
   };
 }
 
-const buildJoinOptions = (queryStr:QueryType,orConditionsOn:string[],value:(string | number)[]):string=>{
+const buildJoinOptions = (
+  queryStr: QueryType,
+  orConditionsOn: string[],
+  value: (string | number)[]
+): string => {
   if (queryStr.options && queryStr.options.length) {
     queryStr.options.forEach((item) => {
       if (item.count && item.title) {
@@ -44,11 +47,11 @@ const buildJoinOptions = (queryStr:QueryType,orConditionsOn:string[],value:(stri
     return ` LEFT JOIN options as o  on h.id = o.hotel_id AND (${orConditionsOn.join(
       " OR "
     )})`;
-  }else{
-    return ""
+  } else {
+    return "";
   }
-}
-const buildJoinReservations = (queryStr:QueryType):string =>{
+};
+const buildJoinReservations = (queryStr: QueryType): string => {
   if (
     queryStr.date &&
     queryStr.date.endDate &&
@@ -57,15 +60,18 @@ const buildJoinReservations = (queryStr:QueryType):string =>{
       queryStr.date.endDate?.split("T")[0]
   ) {
     return ` LEFT JOIN reservations as r on h.id = r.hotel_id`;
-  }else {
-    return ""
+  } else {
+    return "";
   }
-}
-const buildWhereClause =(queryStr:QueryType,value:(string | number)[]):string=>{
+};
+const buildWhereClause = (
+  queryStr: QueryType,
+  value: (string | number)[]
+): string => {
   const orConditions: string[] = [];
   const andConditions: string[] = [];
 
-  let whereClause:string = "";
+  let whereClause: string = "";
 
   if (queryStr.destination) {
     andConditions.push(
@@ -86,9 +92,12 @@ const buildWhereClause =(queryStr:QueryType,value:(string | number)[]):string=>{
     }
   }
   return whereClause;
-}
-const buildGroupByHaving=(queryStr:QueryType,value:(string | number)[]):string=>{
-  let havingClause:string = "";
+};
+const buildGroupByHaving = (
+  queryStr: QueryType,
+  value: (string | number)[]
+): string => {
+  let havingClause: string = "";
   if ((queryStr.options && queryStr.options.length) || queryStr.date) {
     havingClause += ` GROUP BY h.id HAVING `;
     if (queryStr.options && queryStr.options.length) {
@@ -111,7 +120,7 @@ const buildGroupByHaving=(queryStr:QueryType,value:(string | number)[]):string=>
       );
     }
   }
-  return havingClause
-}
+  return havingClause;
+};
 
 export default HotelsModules;
