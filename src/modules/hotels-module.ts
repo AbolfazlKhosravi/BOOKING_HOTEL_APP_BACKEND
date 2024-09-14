@@ -13,8 +13,8 @@ export interface HotelType {
   city: string;
   state: string;
   country: string;
-  latitude:string;
-  longitude:string;
+  latitude:number;
+  longitude:number;
 }
 
 class HotelsModules {
