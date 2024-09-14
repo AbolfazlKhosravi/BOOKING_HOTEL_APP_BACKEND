@@ -13,8 +13,8 @@ export interface HotelType {
   city: string;
   state: string;
   country: string;
-  latitude:number;
-  longitude:number;
+  latitude: number;
+  longitude: number;
 }
 
 class HotelsModules {
@@ -30,6 +30,10 @@ class HotelsModules {
     query += buildGroupByHaving(queryStr, value);
 
     const [result] = await pool.query(query, value);
+    return result as HotelType[];
+  };
+  static getHotel = async (id: number): Promise<HotelType[]> => {
+    const [result] = await pool.query(`SELECT * FROM hotels WHERE id = ?`, [id]);
     return result as HotelType[];
   };
 }

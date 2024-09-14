@@ -1,1 +1,23 @@
 
+{
+  message: [
+    {
+      id: 25,
+      pictuer_url: 'https://a0.muscache.com/im/pictures/10553335/64dc1cd3_original.jpg?aki_policy=x_large',
+      smart_location: 'UKK, London',
+      name: 'nice apartment in centre London',
+      price: 100,
+      summary: 'Mijn ruimte is vlakbij Leidseplein, het Rijksmuseum, het Vondelpark en Paradiso. Je zult genieten van mijn plek vanwege de locatie, de tuin op het zuiden en de sfeer. Mijn ruimte is geschikt voor stellen en gezinnen (met kinderen). Je zult onze twee katten eten moeten  geven en af en toe moeten strelen.',
+      description: "This beautiful apartment has a spacious living and cosy dining room, kitchen with all the facilities you need, separate bedroom and bathroom with shower and bathtub. There are two balcony's, one on the south side so there's always sun.  The house is located next to the famous Vondelpark, in a quiet street in a cosy neighbourhood with a variety of shops and restaurants. The area is on walking distance from the city centre and there are many public transport facilities. There is no longer a cat to be taken care of (if you read my reviews).",
+      street: 'Oud-West, London North Holland 1054, England',
+      city: 'London',
+      state: 'London',
+      country: 'England',
+      latitude: '51.5054054',
+      longitude: '-0.1201630'
+    }
+  ],
+  level: 'info',
+  label: 'logger ',
+  timestamp: '2024-09-14T12:05:39.791Z'
+}
