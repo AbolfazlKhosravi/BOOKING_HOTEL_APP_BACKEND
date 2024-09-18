@@ -10,12 +10,16 @@ export interface BookmarkType {
 }
 
 class BookmarkModules {
-  static getBookmarks = async (queryStr:{}): Promise<BookmarkType[]> => {
-    let query:string = "SELECT * FROM bookmarks"
-    if(queryStr){
-        query += ""
+  static getBookmarks = async (queryStr: {}): Promise<BookmarkType[]> => {
+    let query: string = "SELECT * FROM bookmarks";
+    if (queryStr) {
+      query += "";
     }
     const [result] = await pool.query(query);
+    return result as BookmarkType[];
+  };
+  static getSingleBookmark = async (id:number): Promise<BookmarkType[]> => {
+    const [result] = await pool.query("SELECT * FROM bookmarks  WHERE id =?",[id]);
     return result as BookmarkType[];
   };
 }
