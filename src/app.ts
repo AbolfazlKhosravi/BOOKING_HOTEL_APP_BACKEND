@@ -4,6 +4,7 @@ import "dotenv/config";
 import hotelsRoute from "./routes/hotels-route";
 import homeRoute from "./routes/home-route";
 import bookmarksRoute from "./routes/bookmarks-route";
+import errorHandler from "./middlewares/error_Handler";
 const app = express();
 
 app.use(express.json());
@@ -17,6 +18,7 @@ app.use(
 app.use("/api", homeRoute);
 app.use("/api/hotels", hotelsRoute);
 app.use("/api/bookmarks", bookmarksRoute);
+app.use(errorHandler)
 const APP_PORT =
   process.env.NODE_ENV === "production" ? process.env.PORT : 3000;
 app.listen(APP_PORT, () => {

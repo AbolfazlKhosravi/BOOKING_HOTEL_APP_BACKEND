@@ -1,6 +1,17 @@
+import Joi from "joi";
 import BookmarkModules, { BookmarkType } from "../modules/bookmarks-module";
 import tryCatchHandler from "../utilities/tryCatch_handler";
 import { Request, Response } from "express-serve-static-core";
+import AppError from "../utilities/app_errores";
+import { QueryResult } from "mysql2";
+export interface BookmarkFrontType {
+  cityName: string;
+  country: string;
+  countryCode: string;
+  lat: number;
+  lon: number;
+  hostLocation: string;
+}
 const getBookmarks = tryCatchHandler<
   Request<string, {}, {}, {}>,
   Response<BookmarkType[]>
@@ -22,4 +33,34 @@ const getBookmark = tryCatchHandler<
   res.status(200).json(bookmark);
 });
 
-export { getBookmarks, getBookmark };
+const addBookmark = tryCatchHandler<
+  Request<{}, {}, BookmarkFrontType>,
+  Response<{ message: string; status: QueryResult }>
+>(
+  async (
+    req: Request<{}, {}, BookmarkFrontType>,
+    res: Response<{ message: string; status: QueryResult }>
+  ) => {
+    const schema = {
+      cityName: Joi.string().max(30).required(),
+      country: Joi.string().max(30).required(),
+      countryCode: Joi.string().max(10).required(),
+      hostLocation: Joi.string().required(),
+      lat: Joi.number().strict().required(),
+      lon: Joi.number().strict().required(),
+    };
+    const validateResult = Joi.object(schema).validate(req.body);
+
+    if (validateResult.error) {
+      throw new AppError(101, 400, validateResult.error.details[0].message);
+    }
+    const result = await BookmarkModules.addBookmark(req.body);
+
+    res.status(200).json({
+      message: "New bookmark added successfully!",
+      status: result,
+    });
+  }
+);
+
+export { getBookmarks, getBookmark, addBookmark };

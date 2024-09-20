@@ -5,7 +5,7 @@ export default function tryCatchHandler<Req, Res>(
   return async (req: Req, res: Res, next: NextFunction) => {
     try {
       await controller(req, res);
-    } catch (error) {
+    } catch (error:unknown) {
       next(error);
     }
   };
