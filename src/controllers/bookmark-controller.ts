@@ -54,13 +54,35 @@ const addBookmark = tryCatchHandler<
     if (validateResult.error) {
       throw new AppError(101, 400, validateResult.error.details[0].message);
     }
-    const result = await BookmarkModules.addBookmark(req.body);
+    const status = await BookmarkModules.addBookmark(req.body);
 
     res.status(200).json({
       message: "New bookmark added successfully!",
-      status: result,
+      status,
     });
   }
 );
-
-export { getBookmarks, getBookmark, addBookmark };
+const deleteBookmark = tryCatchHandler<
+  Request<{ id: string }>,
+  Response<{ message: string; status: QueryResult; bookmarks: BookmarkType[] }>
+>(
+  async (
+    req: Request<{ id: string }>,
+    res: Response<{
+      message: string;
+      status: QueryResult;
+      bookmarks: BookmarkType[];
+    }>
+  ) => {
+    const status: QueryResult = await BookmarkModules.deleteBookmark(
+      Number(req.params.id)
+    );
+    const bookmarks: BookmarkType[] = await BookmarkModules.getBookmarks(
+      req.query
+    );
+    res
+      .status(200)
+      .json({ message: "Bookmark deleted successfully", status, bookmarks });
+  }
+);
+export { getBookmarks, getBookmark, addBookmark, deleteBookmark };

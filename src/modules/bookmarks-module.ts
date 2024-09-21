@@ -1,3 +1,4 @@
+import { QueryResult } from "mysql2";
 import { BookmarkFrontType } from "../controllers/bookmark-controller";
 import pool from "../utilities/mysql_dstabase";
 export interface BookmarkType {
@@ -25,7 +26,9 @@ class BookmarkModules {
     ]);
     return result as BookmarkType[];
   };
-  static addBookmark = async (data: BookmarkFrontType) => {
+  static addBookmark = async (
+    data: BookmarkFrontType
+  ): Promise<QueryResult> => {
     const [retult] = await pool.query(
       "INSERT INTO bookmarks (city_name,country,country_code,latitude,longitude,host_location) VALUE (?,?,?,?,?,?)",
       [
@@ -37,8 +40,11 @@ class BookmarkModules {
         data.hostLocation,
       ]
     );
-
     return retult;
+  };
+  static deleteBookmark = async (id: number): Promise<QueryResult> => {
+    const [result] = await pool.query("DELETE FROM bookmarks WHERE id=?", [id]);
+    return result;
   };
 }
 
