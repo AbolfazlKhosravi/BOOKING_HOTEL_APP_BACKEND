@@ -11,6 +11,10 @@ export interface BookmarkType {
   host_location: string;
 }
 
+export interface ResultAddBookmarkType {
+  insertId: number;
+}
+
 class BookmarkModules {
   static getBookmarks = async (queryStr: {}): Promise<BookmarkType[]> => {
     let query: string = "SELECT * FROM bookmarks";
@@ -28,7 +32,7 @@ class BookmarkModules {
   };
   static addBookmark = async (
     data: BookmarkFrontType
-  ): Promise<QueryResult> => {
+  ): Promise<ResultAddBookmarkType> => {
     const [retult] = await pool.query(
       "INSERT INTO bookmarks (city_name,country,country_code,latitude,longitude,host_location) VALUE (?,?,?,?,?,?)",
       [
@@ -40,7 +44,7 @@ class BookmarkModules {
         data.hostLocation,
       ]
     );
-    return retult;
+    return retult as ResultAddBookmarkType;
   };
   static deleteBookmark = async (id: number): Promise<QueryResult> => {
     const [result] = await pool.query("DELETE FROM bookmarks WHERE id=?", [id]);

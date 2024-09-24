@@ -1,5 +1,5 @@
 import Joi from "joi";
-import BookmarkModules, { BookmarkType } from "../modules/bookmarks-module";
+import BookmarkModules, { BookmarkType, ResultAddBookmarkType } from "../modules/bookmarks-module";
 import tryCatchHandler from "../utilities/tryCatch_handler";
 import { Request, Response } from "express-serve-static-core";
 import AppError from "../utilities/app_errores";
@@ -35,11 +35,15 @@ const getBookmark = tryCatchHandler<
 
 const addBookmark = tryCatchHandler<
   Request<{}, {}, BookmarkFrontType>,
-  Response<{ message: string; status: QueryResult }>
+  Response<{ message: string; status: ResultAddBookmarkType; bookmark: BookmarkType }>
 >(
   async (
     req: Request<{}, {}, BookmarkFrontType>,
-    res: Response<{ message: string; status: QueryResult }>
+    res: Response<{
+      message: string;
+      status: ResultAddBookmarkType;
+      bookmark: BookmarkType;
+    }>
   ) => {
     const schema = {
       cityName: Joi.string().max(30).required(),
@@ -54,11 +58,17 @@ const addBookmark = tryCatchHandler<
     if (validateResult.error) {
       throw new AppError(101, 400, validateResult.error.details[0].message);
     }
-    const status = await BookmarkModules.addBookmark(req.body);
+    const status:ResultAddBookmarkType = await BookmarkModules.addBookmark(req.body);
+
+    const Bookmarks: BookmarkType[] = await BookmarkModules.getSingleBookmark(
+      Number(status.insertId)
+    );
+    const bookmark: BookmarkType = Bookmarks[0];
 
     res.status(200).json({
       message: "New bookmark added successfully!",
       status,
+      bookmark,
     });
   }
 );
