@@ -33,7 +33,7 @@ class BookmarkModules {
   static addBookmark = async (
     data: BookmarkFrontType
   ): Promise<ResultAddBookmarkType> => {
-    const [retult] = await pool.query(
+    const [result] = await pool.query(
       "INSERT INTO bookmarks (city_name,country,country_code,latitude,longitude,host_location) VALUE (?,?,?,?,?,?)",
       [
         data.cityName,
@@ -44,7 +44,7 @@ class BookmarkModules {
         data.hostLocation,
       ]
     );
-    return retult as ResultAddBookmarkType;
+    return result as ResultAddBookmarkType;
   };
   static deleteBookmark = async (id: number): Promise<QueryResult> => {
     const [result] = await pool.query("DELETE FROM bookmarks WHERE id=?", [id]);
