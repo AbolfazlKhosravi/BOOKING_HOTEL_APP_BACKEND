@@ -16,7 +16,9 @@ function errorHandler(
     return;
   }
    
-    res.status(500).send(`somthing is not going to work`);
+    res.status(500).send({
+      message:`somthing is not going to work`
+    });
   
 }
 
