@@ -20,36 +20,6 @@ This project is a hotel booking system API built using Node.js, Express, MySQL, 
 - **/controllers**: Handles the core logic for interacting with the database.
 - **/middlewares**: Custom middleware for authentication and error handling.
 
-## Dependencies
-
-```json
-"dependencies": {
-    "bcrypt": "^5.1.1",
-    "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "joi": "^17.13.3",
-    "jsonwebtoken": "^9.0.2",
-    "lodash": "^4.17.21",
-    "mysql2": "^3.11.0",
-    "qs": "^6.13.0",
-    "winston": "^3.14.2"
-},
-"devDependencies": {
-    "@types/bcrypt": "^5.0.2",
-    "@types/cookie-parser": "^1.4.7",
-    "@types/cors": "^2.8.17",
-    "@types/express": "^4.17.21",
-    "@types/jsonwebtoken": "^9.0.7",
-    "@types/lodash": "^4.17.9",
-    "@types/node": "^22.5.3",
-    "@types/qs": "^6.9.15",
-    "nodemon": "^3.1.4",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.5.4"
-}
-
 ## Database Schema Setup
 
 To set up the database schema, use the following SQL statements:
