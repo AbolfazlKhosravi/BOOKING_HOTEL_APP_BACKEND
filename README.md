@@ -15,7 +15,8 @@ This project is a hotel booking system API built using Node.js, Express, MySQL, 
 ## Project Structure
 
 - **/src**: Contains all the TypeScript source files.
-- **/config**: Contains environment variable configurations.
+- **/utilities**: Contains utility functions and helpers for various tasks, such as data validation, formatting, and database query construction. .
+- **/modules**: Houses specific modules that encapsulate related functionalities, including database queries for hotels, reservations, and user management..
 - **/routes**: API routes for users, hotels, and reservations.
 - **/controllers**: Handles the core logic for interacting with the database.
 - **/middlewares**: Custom middleware for authentication and error handling.
@@ -79,3 +80,4 @@ CREATE TABLE `reservations` (
   CONSTRAINT `reservation_to_hotels` FOREIGN KEY (`hotel_id`) REFERENCES `hotels` (`id`)
 );
 
+```
