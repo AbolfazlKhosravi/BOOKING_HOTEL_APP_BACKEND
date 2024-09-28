@@ -65,8 +65,6 @@ CREATE TABLE `bookmarks` (
   `host_location` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 );
-
-
 CREATE TABLE `hotels` (
   `id` int NOT NULL AUTO_INCREMENT,
   `picture_url` varchar(255) NOT NULL,
@@ -84,7 +82,6 @@ CREATE TABLE `hotels` (
   PRIMARY KEY (`id`),
   FULLTEXT KEY `idx_multi_columns` (`smart_location`, `name`, `summary`, `description`, `street`, `city`, `state`, `country`)
 );
-
 CREATE TABLE `options` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(25) NOT NULL,
@@ -95,7 +92,6 @@ CREATE TABLE `options` (
   KEY `options_to_hotels_idx` (`hotel_id`),
   CONSTRAINT `options_to_hotels` FOREIGN KEY (`hotel_id`) REFERENCES `hotels` (`id`)
 );
-
 CREATE TABLE `users` (
   `id` varchar(50) NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -103,7 +99,6 @@ CREATE TABLE `users` (
   `email` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
 );
-
 CREATE TABLE `reservations` (
   `id` int NOT NULL AUTO_INCREMENT,
   `hotel_id` int NOT NULL,
