@@ -1,4 +1,4 @@
-import HomeModules,{ HomeDataType }  from "../modules/home-module";
+import HomeModules, { HomeDataType } from "../modules/home-module";
 import tryCatchHandler from "../utilities/tryCatch_handler";
 import { Request, Response } from "express-serve-static-core";
 
